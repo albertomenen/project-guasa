@@ -11,15 +11,24 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  username: {
+  name: {
     type: String,
     required: true
   },
-  role: {
+  surname: {
     type: String,
-    enum: ['user', 'admin'],
-    default: 'user'
+    required: true
+  },
+  phone: {
+    type: String,
+    required: true
+  },
+  
+  image: {
+    type: String,
+    required: false
   }
+  
 },
   {
     timestamps: true
