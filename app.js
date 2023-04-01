@@ -4,13 +4,15 @@ const createError = require('http-errors');
 const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
+const { isAuthenticated } = require("./middlewares/jwt");
 
 // Routers require
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 const clientRouter = require("./routes/client")
+const taskRouter = require("./routes/task")
 
-const app = express();
+const app = express(); 
 
 // cookies and loggers
 app.use(cors({
@@ -25,7 +27,8 @@ app.use(express.urlencoded({ extended: false }));
 // routes intro
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
-app.use ("/client", clientRouter)
+app.use("/client", isAuthenticated, clientRouter)
+app.use("/task", isAuthenticated, taskRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

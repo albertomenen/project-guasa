@@ -27,7 +27,12 @@ const userSchema = new Schema({
   image: {
     type: String,
     required: false
-  }
+  },
+
+  clients: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref:"Client"
+  }]
   
 },
   {

@@ -8,6 +8,7 @@ const saltRounds = 10;
 // @desc    SIGN UP new user
 // @route   POST /api/v1/auth/signup
 // @access  Public
+
 router.post('/signup', async (req, res, next) => {
   const { email, password, username } = req.body;
   // Check if email or password or name are provided as empty string 
@@ -46,6 +47,7 @@ router.post('/signup', async (req, res, next) => {
 // @desc    LOG IN user
 // @route   POST /api/v1/auth/login
 // @access  Public
+
 router.post('/login', async (req, res, next) => { 
   console.log(req.headers);
   const { email, password } = req.body;
@@ -59,7 +61,7 @@ router.post('/login', async (req, res, next) => {
     const userInDB = await User.findOne({ email });
     // If they don't exist, return an error
     if (!userInDB) {
-      res.status(404).json({ success: false, message: `No user registered by email ${email}` })
+      res.status(401).json({ success: false, message: `No user registered by email ${email}` })
       return;
     } else {
       const passwordMatches = bcrypt.compareSync(password, userInDB.hashedPassword);
@@ -85,6 +87,23 @@ router.post('/login', async (req, res, next) => {
     }
   } catch (error) {
     next(error)
+  }
+});
+
+// @desc    DELETE a user by id
+// @route   DELETE /users/:id
+// @access  Private
+
+
+router.delete('/users/:id', isAuthenticated, isAdmin, async (req, res, next) => {
+  try {
+    const deletedUser = await User.findByIdAndDelete(req.params.id);
+    if (!deletedUser) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+    return res.status(200).json({ success: true, message: 'User deleted successfully' });
+  } catch (error) {
+    next(error);
   }
 });
 

@@ -1,4 +1,4 @@
- 
+
 const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
  
@@ -11,6 +11,4 @@ const taskSchema = new Schema({
   bill: Number
 });
  
-const Task = model("Task", taskSchema);
-
-module.export = Task;
+module.exports = model("Task", taskSchema);

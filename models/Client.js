@@ -4,30 +4,30 @@ const clientSchema = new Schema (
     {
         name: {
           type: String,
-          trim: true,
-          required: [true, 'Name is required.'],
+          //trim: true,
+          //required: [true, 'Name is required.'],
         },
         surname: {
           type: String,
-          required: [true, 'Surname is required.'],
+          //required: [true, 'Surname is required.'],
         },
         phone: {
           type: Number,
-          required: [true, 'phone is required.']
+          //required: [true, 'phone is required.']
         },
         email: {
             type: String,
-            required: [true, 'email is required.']
+            //required: [true, 'email is required.']
           },
         photo: {
             type: String,
-            required: [false]
+            //required: [false]
           },
         bill: {
             type: Number,
-            required: [false]
+            //required: [false]
         },
-        tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }]
+        //tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }]
 
     }
 
@@ -36,4 +36,4 @@ const clientSchema = new Schema (
 
 const Client = model("Client", clientSchema);
 
-module.export = Client;
+module.exports = Client;
