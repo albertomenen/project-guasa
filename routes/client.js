@@ -2,7 +2,9 @@ const router = require('express').Router();
 const Client = require ("../models/Client")
 const Task = require ("../models/Task")
 
-router.get('/', async (req, res, next) => {
+
+router.get('/:id', async (req, res, next) => {
+console.log("Hola")
     try {
       const clients = await Client.find();
       res.status(200).json(clients);
@@ -11,21 +13,17 @@ router.get('/', async (req, res, next) => {
     }
   });
 
-
-  
-
 // @desc    Create a new client
 // @route   POST /client
 // @access  Private
 
+router.post('/new', async (req, res, next) => {
 
-router.post('/client', (req, res, next) => {
-    const { name, surname, phone, email, photo, bill } = req.body;
-    Client.create({ name, surname, phone, email, photo, bill })
+    const {  name, surname, phone, email, photo, bill, control } = req.body;
+    await Client.create({  name, surname, phone, email, photo, bill, control})
         .then(response => res.json(response))
         .catch(err => res.json(err));
   });
-
 
 // @desc    Get a client by ID
 // @route   GET /client/:id
@@ -34,6 +32,7 @@ router.post('/client', (req, res, next) => {
   router.get('/client/:id', async (req, res, next) => {
     try {
       const { id } = req.params;
+
       const client = await Client.findById(id);
       if (!client) {
         return res.status(404).json({ message: "Client not found" });
@@ -44,13 +43,23 @@ router.post('/client', (req, res, next) => {
     }
   });
 
+
+  router.all('/client/:id', (req, res, next) => {
+    console.log('Received request in client.js');
+    next();
+  });
+
 // @desc    Update a client by ID
 // @route   PUT /client/:id
 // @access  Private
 
+// I remove the Auth because it was giving me some problems 
 
-  router.put('/client/:id', async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
+    console.log('Inside PUT /client/:id handler');
     try {
+      console.log("PUT request received"); // Debugging line
+  
       const { id } = req.params;
       const client = await Client.findByIdAndUpdate(id, req.body, {
         new: true,
@@ -63,6 +72,7 @@ router.post('/client', (req, res, next) => {
       next(error);
     }
   });
+  
 
 // @desc    Delete a client by ID
 // @route   DELETE /client/:id

@@ -1,7 +1,9 @@
 const { Schema, model} = require("mongoose")
 
+
 const clientSchema = new Schema (
     {
+       
         name: {
           type: String,
           //trim: true,
@@ -27,13 +29,15 @@ const clientSchema = new Schema (
             type: Number,
             //required: [false]
         },
-        //tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }]
+        control: {
+            type: String,
+            //required: [false]
+        },
+        tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }]
 
     }
 
 
 )
 
-const Client = model("Client", clientSchema);
-
-module.exports = Client;
+module.exports = model("Client", clientSchema);

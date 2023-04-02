@@ -9,6 +9,7 @@ const saltRounds = 10;
 // @route   POST /api/v1/auth/signup
 // @access  Public
 
+
 router.post('/signup', async (req, res, next) => {
   const { email, password, username } = req.body;
   // Check if email or password or name are provided as empty string 
@@ -35,6 +36,7 @@ router.post('/signup', async (req, res, next) => {
       return;
     } else {
       const salt = bcrypt.genSaltSync(saltRounds);
+      console.log("Helo")
       const hashedPassword = bcrypt.hashSync(password, salt);
       const newUser = await User.create({ email, hashedPassword, username });
       res.status(201).json({ data: newUser });
@@ -49,11 +51,10 @@ router.post('/signup', async (req, res, next) => {
 // @access  Public
 
 router.post('/login', async (req, res, next) => { 
-  console.log(req.headers);
   const { email, password } = req.body;
   // Check if email or password are provided as empty string 
   if (email === "" || password === "") {
-    res.status(400).json({ message: 'Please fill all the fields to login' });
+    res.status(400).json({ message: 'Please fill all the fields to login'});
     return;
   }
   try {

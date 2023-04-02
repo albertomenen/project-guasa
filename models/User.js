@@ -11,27 +11,27 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  name: {
+  username: {
     type: String,
     required: true
   },
   surname: {
     type: String,
-    required: true
+    //required: true
   },
   phone: {
     type: String,
-    required: true
+    //required: true
   },
   
   image: {
     type: String,
-    required: false
+    //required: false
   },
 
   clients: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref:"Client"
+    //ref:"Client"
   }]
   
 },

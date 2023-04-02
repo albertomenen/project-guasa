@@ -6,11 +6,14 @@ const logger = require('morgan');
 const cors = require('cors');
 const { isAuthenticated } = require("./middlewares/jwt");
 
+
+
 // Routers require
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
-const clientRouter = require("./routes/client")
-const taskRouter = require("./routes/task")
+const clientRouter = require("./routes/client");
+const taskRouter = require("./routes/task");
+const listRouter = require("./routes/list");
 
 const app = express(); 
 
@@ -20,15 +23,28 @@ app.use(cors({
 }));
 app.set('trust proxy', 1);
 
+
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+
+
 // routes intro
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
-app.use("/client", isAuthenticated, clientRouter)
-app.use("/task", isAuthenticated, taskRouter)
+app.use("/client", clientRouter)
+app.use("/task", taskRouter)
+app.use("/list" ,listRouter)
+
+// Route controler 
+
+
+app.use('*', (req, res, next) => {
+  console.log(`Received request: ${req.method} ${req.originalUrl}`);
+  next();
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
