@@ -13,6 +13,20 @@ console.log("Hola")
     }
   });
 
+  // Search parameter
+
+  router.get('/search/:name', async (req, res, next) => {
+    try {
+      const { name } = req.params;
+      const clients = await Client.find({ name: { $regex: new RegExp(name, 'i') } });
+      res.status(200).json(clients);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+
+
 // @desc    Create a new client
 // @route   POST /client
 // @access  Private

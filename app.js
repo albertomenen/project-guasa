@@ -34,9 +34,9 @@ app.use(express.urlencoded({ extended: false }));
 // routes intro
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
-app.use("/client", clientRouter)
-app.use("/task", taskRouter)
-app.use("/list" ,listRouter)
+app.use("/client", isAuthenticated, clientRouter)
+app.use("/task",isAuthenticated, taskRouter)
+app.use("/list" ,isAuthenticated, listRouter)
 
 // Route controler 
 
