@@ -3,8 +3,17 @@ const Client = require ("../models/Client")
 const Task = require ("../models/Task")
 
 
+router.get("/", async (req, res) => {
+  try {
+    const clients = await Client.find();
+    res.status(200).json(clients);
+  } catch (error) {
+    next(error)
+  }
+});
+
+
 router.get('/:id', async (req, res, next) => {
-console.log("Hola")
     try {
       const clients = await Client.find();
       res.status(200).json(clients);
@@ -33,8 +42,8 @@ console.log("Hola")
 
 router.post('/new', async (req, res, next) => {
 
-    const {  name, surname, phone, email, photo, bill, control } = req.body;
-    await Client.create({  name, surname, phone, email, photo, bill, control})
+    const {  name, surname, phone, email, photo, bill, control, description } = req.body;
+    await Client.create({  name, surname, phone, email, photo, bill, control, description})
         .then(response => res.json(response))
         .catch(err => res.json(err));
   });

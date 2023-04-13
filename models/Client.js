@@ -29,6 +29,9 @@ const clientSchema = new Schema (
             type: Number,
             //required: [false]
         },
+        description: {
+            type: String
+        },
         control: {
             type: String,
             //required: [false]

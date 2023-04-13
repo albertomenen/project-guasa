@@ -9,8 +9,8 @@ router.post('/', isAuthenticated, async (req, res, next) => {
   console.log("Inside POST /list handler"); // Debugging line
 
   try {
-    const { user, client } = req.body;
-    const newList = await List.create({ user, client });
+    const { name, user, client } = req.body;
+    const newList = await List.create({ name, user, client });
     const savedList = await newList.save();
     res.status(201).json(newList);
   } catch (error) {
@@ -23,7 +23,8 @@ router.post('/', isAuthenticated, async (req, res, next) => {
 // @access  Private
 router.get('/', isAuthenticated, async (req, res, next) => {
   try {
-    const lists = await List.find().populate('user').populate('client');
+    const lists = await List.find().populate('user').populate({ path: 'client', model: 'Client' });
+    //Este es el que he variado ==> //const lists = await List.find().populate('user').populate('client');
     res.status(200).json(lists);
   } catch (error) {
     next(error);
@@ -41,22 +42,6 @@ router.get('/:id', isAuthenticated, async (req, res, next) => {
       return res.status(404).json({ message: 'List not found' });
     }
     res.status(200).json(list);
-  } catch (error) {
-    next(error);
-  }
-});
-
-// @desc    Update list by ID
-// @route   PUT /list/:id
-// @access  Private
-router.put('/:id', isAuthenticated, async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const updatedList = await List.findByIdAndUpdate(id, req.body, { new: true });
-    if (!updatedList) {
-      return res.status(404).json({ message: 'List not found' });
-    }
-    res.status(200).json(updatedList);
   } catch (error) {
     next(error);
   }
