@@ -14,6 +14,7 @@ const authRouter = require('./routes/auth');
 const clientRouter = require("./routes/client");
 const taskRouter = require("./routes/task");
 const listRouter = require("./routes/list");
+const userRouter = require("./routes/user")
 
 const app = express(); 
 
@@ -37,6 +38,8 @@ app.use('/auth', authRouter);
 app.use("/client", isAuthenticated, clientRouter)
 app.use("/task",isAuthenticated, taskRouter)
 app.use("/list" ,isAuthenticated, listRouter)
+app.use("/user" , userRouter)
+
 
 // Route controler 
 

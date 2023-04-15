@@ -5,11 +5,11 @@ const userSchema = new Schema({
   email: {
     type: String,
     unique: true,
-    required: true
+    //required: true
   },
   hashedPassword: {
     type: String,
-    required: true
+    //required: true
   },
   username: {
     type: String,
