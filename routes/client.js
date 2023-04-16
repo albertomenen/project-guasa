@@ -13,26 +13,20 @@ router.get("/", async (req, res) => {
 });
 
 
+
 router.get('/:id', async (req, res, next) => {
-    try {
-      const clients = await Client.find();
-      res.status(200).json(clients);
-    } catch (error) {
-      next(error)
+  try {
+    const { id } = req.params;
+    const client = await Client.findById(id);
+    if (!client) {
+      return res.status(404).json({ message: "Client not found" });
     }
-  });
+    res.status(200).json(client);
+  } catch (error) {
+    next(error);
+  }
+});
 
-  // Search parameter
-
-  router.get('/search/:name', async (req, res, next) => {
-    try {
-      const { name } = req.params;
-      const clients = await Client.find({ name: { $regex: new RegExp(name, 'i') } });
-      res.status(200).json(clients);
-    } catch (error) {
-      next(error);
-    }
-  });
 
 
 
@@ -48,29 +42,7 @@ router.post('/new', async (req, res, next) => {
         .catch(err => res.json(err));
   });
 
-// @desc    Get a client by ID
-// @route   GET /client/:id
-// @access  Private
 
-  router.get('/client/:id', async (req, res, next) => {
-    try {
-      const { id } = req.params;
-
-      const client = await Client.findById(id);
-      if (!client) {
-        return res.status(404).json({ message: "Client not found" });
-      }
-      res.status(200).json(client);
-    } catch (error) {
-      next(error);
-    }
-  });
-
-
-  router.all('/client/:id', (req, res, next) => {
-    console.log('Received request in client.js');
-    next();
-  });
 
 // @desc    Update a client by ID
 // @route   PUT /client/:id
