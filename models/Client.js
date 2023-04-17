@@ -25,10 +25,6 @@ const clientSchema = new Schema (
             type: String,
             //required: [true, 'email is required.']
           },
-        photo: {
-            type: String,
-            //required: [false]
-          },
         bill: {
             type: Number,
             //required: [false]
@@ -36,10 +32,7 @@ const clientSchema = new Schema (
         description: {
             type: String
         },
-        control: {
-            type: String,
-            //required: [false]
-        },
+       
         tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }]
 
     }

@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const Client = require ("../models/Client")
 const Task = require ("../models/Task")
+const { isAuthenticated } = require('../middlewares/jwt'); 
+
 
 
 router.get("/", async (req, res) => {
@@ -11,6 +13,10 @@ router.get("/", async (req, res) => {
     next(error)
   }
 });
+
+// @desc    Get a client
+// @route   Get /client
+// @access  Private
 
 
 
@@ -27,6 +33,17 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
+router.get('/user/:userId', isAuthenticated, async (req, res, next) => {
+  const userId = req.params.userId;
+
+  try {
+    const clients = await Client.find({ userId: userId });
+    res.status(200).json(clients);
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 
 
@@ -34,13 +51,14 @@ router.get('/:id', async (req, res, next) => {
 // @route   POST /client
 // @access  Private
 
-router.post('/new', async (req, res, next) => {
+router.post('/new', isAuthenticated, async (req, res, next) => {
+  const { name, surname, phone, email, photo, bill, control, description } = req.body;
+  const userId = req.user._id; 
 
-    const {  name, surname, phone, email, photo, bill, control, description } = req.body;
-    await Client.create({  name, surname, phone, email, photo, bill, control, description})
-        .then(response => res.json(response))
-        .catch(err => res.json(err));
-  });
+  await Client.create({ userId, name, surname, phone, email, photo, bill, control, description })
+    .then(response => res.json(response))
+    .catch(err => res.json(err));
+});
 
 
 
@@ -53,7 +71,6 @@ router.post('/new', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
     console.log('Inside PUT /client/:id handler');
     try {
-      console.log("PUT request received"); // Debugging line
   
       const { id } = req.params;
       const client = await Client.findByIdAndUpdate(id, req.body, {
@@ -73,7 +90,7 @@ router.put('/:id', async (req, res, next) => {
 // @route   DELETE /client/:id
 // @access  Private
 
-router.delete('/delete/:id', async (req, res, next) => {
+router.delete('/delete/:id',isAuthenticated, async (req, res, next) => {
   try {
     const { id } = req.params;
     const deletedClient = await Client.findByIdAndDelete(id);
