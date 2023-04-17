@@ -37,7 +37,7 @@ router.get('/', isAuthenticated, async (req, res, next) => {
 router.get('/:id', isAuthenticated, async (req, res, next) => {
   try {
     const { id } = req.params;
-    const list = await List.findById(id).populate('user').populate('client');
+    const list = await List.find({user: id}).populate('user').populate('client');
     if (!list) {
       return res.status(404).json({ message: 'List not found' });
     }

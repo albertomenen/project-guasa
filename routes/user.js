@@ -3,6 +3,25 @@ const User = require('../models/User');
 const { isAuthenticated } = require('../middlewares/jwt');
 const jwt = require("jsonwebtoken");
 
+
+// @desc Profile View
+// @route GET /profile
+// @access Private
+
+
+router.get("/:userId", isAuthenticated, async (req, res, next) => {
+  const { _id} = req.payload;
+  try {
+      const user = await User.findOne({ _id }); 
+      res.status(200).json({ user });
+      console.log(_id)
+      } catch (error) {
+      next(error);
+  }
+});
+
+
+
 // @desc    Edit one user
 // @route   PUT /user/edit/:userId
 // @access  Private

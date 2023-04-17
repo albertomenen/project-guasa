@@ -3,11 +3,7 @@ const { Schema, model} = require("mongoose")
 
 const clientSchema = new Schema (
     {
-      userId: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-      },
+      
         name: {
           type: String,
           //trim: true,

@@ -28,11 +28,6 @@ const userSchema = new Schema({
     type: String,
     //required: false
   },
-
-  clients: [{
-    type: mongoose.Schema.Types.ObjectId,
-    //ref:"Client"
-  }]
   
 },
   {

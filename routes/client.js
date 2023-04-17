@@ -33,16 +33,16 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-router.get('/user/:userId', isAuthenticated, async (req, res, next) => {
-  const userId = req.params.userId;
+// router.get('/user/:userId', isAuthenticated, async (req, res, next) => {
+//   const userId = req.params.userId;
 
-  try {
-    const clients = await Client.find({ userId: userId });
-    res.status(200).json(clients);
-  } catch (error) {
-    next(error);
-  }
-});
+//   try {
+//     const clients = await Client.find({ userId: userId });
+//     res.status(200).json(clients);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 
 
@@ -53,7 +53,7 @@ router.get('/user/:userId', isAuthenticated, async (req, res, next) => {
 
 router.post('/new', isAuthenticated, async (req, res, next) => {
   const { name, surname, phone, email, photo, bill, control, description } = req.body;
-  const userId = req.user._id; 
+  const userId = req.payload; 
 
   await Client.create({ userId, name, surname, phone, email, photo, bill, control, description })
     .then(response => res.json(response))
