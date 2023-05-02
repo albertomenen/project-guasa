@@ -1,10 +1,15 @@
-# fly.toml file generated for guasa on 2023-03-25T11:41:58+01:00
+# fly.toml app configuration file generated for course on 2023-05-02T18:47:16+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
-app = "guasa"
+app = "course"
 kill_signal = "SIGINT"
 kill_timeout = 5
 primary_region = "mad"
 processes = []
+
+[build]
 
 [env]
   PORT = "8080"
