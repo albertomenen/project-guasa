@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 
-const UserSchema = new Schema({
+const userSchema = new Schema({
   email: {
     type: String,
     unique: true,
@@ -28,20 +28,10 @@ const UserSchema = new Schema({
     type: String,
     //required: false
   },
-  is_instructor: {
-    type: Boolean,
-    required: true
-  },
-  instructor: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Instructor",
-    required: true
-  },
-
   
 },
   {
     timestamps: true
   });
 
-module.exports = model("User", UserSchema);
+module.exports = model("User", userSchema);

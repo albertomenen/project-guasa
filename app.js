@@ -11,12 +11,10 @@ const { isAuthenticated } = require("./middlewares/jwt");
 // Routers require
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
-const courseRouter = require("./routes/course");
-const instructorRouter = require("./routes/instructor");
-const purchaseRouter = require("./routes/purchase");
+const clientRouter = require("./routes/client");
+const taskRouter = require("./routes/task");
+const listRouter = require("./routes/list");
 const userRouter = require("./routes/user")
-const paymentRouter = require('./routes/paymentRoutes');
-
 
 const app = express(); 
 
@@ -37,11 +35,10 @@ app.use(express.urlencoded({ extended: false }));
 // routes intro
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
-app.use("/course", isAuthenticated, courseRouter)
-app.use("/instructor",isAuthenticated, instructorRouter)
-app.use("/purchase" ,isAuthenticated, purchaseRouter)
+app.use("/client", isAuthenticated, clientRouter)
+app.use("/task",isAuthenticated, taskRouter)
+app.use("/list" ,isAuthenticated, listRouter)
 app.use("/user" , userRouter)
-app.use("/api/payment", paymentRouter)
 
 
 // Route controler 

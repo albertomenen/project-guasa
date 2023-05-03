@@ -1,9 +1,9 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', true);
-const Course = require('../models/Course');
+const Client = require('../models/Client');
 
-const courses = [
+const clients = [
   {
     "name": "Web development 4 everyone",
     "surname": "https://www.aptech.net.in/images/course/full/web-development-training.jpg",
@@ -47,10 +47,10 @@ mongoose
     return Course.deleteMany({})
   })
   .then(() => {
-    return Course.create(courses)
+    return Client.create(clients)
   })
   .then((created) => {
-    console.log(`Created ${created.length} courses`)
+    console.log(`Created ${created.length} clients`)
   })
   .catch((err) => {
     console.error("Error connecting to mongo: ", err);
